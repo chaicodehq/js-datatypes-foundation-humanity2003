@@ -49,20 +49,38 @@
  */
 export function findPassenger(passengers, name) {
   // Your code here
+  //Agar passengers array nahi hai ya name string nahi hai, return undefined
+  if (!Array.isArray(passengers) || typeof name !== 'string') return undefined;
+  return passengers.find(passenger => passenger.name.toUpperCase() === name.toUpperCase());
 }
 
 export function getPassengerIndex(passengers, name) {
   // Your code here
+  // Agar passengers array nahi hai ya name string nahi hai, return -1
+  if (!Array.isArray(passengers) || typeof name !== 'string') return -1;
+  return passengers.findIndex(passenger => passenger.name.toUpperCase() === name.toUpperCase());
+
 }
 
 export function isAnyWaitlisted(passengers) {
   // Your code here
+  // Agar passengers array nahi hai ya empty hai, return false
+  if (!Array.isArray(passengers) || passengers.length === 0) return false;
+  return passengers.some(passenger => passenger.status === "waitlisted");
+
 }
 
 export function areAllConfirmed(passengers) {
   // Your code here
+  // Agar passengers array nahi hai ya empty hai, return false
+  if (!Array.isArray(passengers) || passengers.length === 0) return false;
+  return passengers.every(passenger => passenger.status === "confirmed");
 }
 
 export function getWaitlistedPassengers(passengers) {
   // Your code here
+  // Agar passengers array nahi hai, return []
+  if (!Array.isArray(passengers)) return [];
+  return passengers.filter(passenger => passenger.status === "waitlisted");
+
 }

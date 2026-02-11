@@ -52,20 +52,55 @@
  */
 export function getItemNames(items) {
   // Your code here
+  // Agar items array nahi hai, return []
+  if (!Array.isArray(items)) return [];
+  return items.map(item => item.name);
 }
 
 export function getAffordableItems(items, maxPrice) {
   // Your code here
+
+  // Agar items array nahi hai ya maxPrice number nahi hai, return []
+  if (!Array.isArray(items) || typeof maxPrice !== 'number') return [];
+
+  return items.filter(item => {
+    return item.price<=maxPrice &&
+    typeof item === "object" &&
+    item !== null &&
+    !Array.isArray(item);
+  });
 }
 
 export function calculateTotal(items) {
   // Your code here
+  if (!Array.isArray(items) || items.length === 0) return "";
+  return items.reduce((total, item) => {
+    return item.price*item.qty;
+  },0)
 }
 
 export function sortByPrice(items, ascending) {
   // Your code here
+
+  // Agar items array nahi hai, return []
+  if (!Array.isArray(items) || items.length === 0) return [];
+
+  // [...items].sort() se NEW sorted array return karo (original mat badlo!)
+  if (ascending){
+    return items.sort((a,b) => 
+      ((a.price - b.price) && typeof a === "object" && typeof b === "object")
+  )}
+
 }
 
 export function formatBill(items) {
   // Your code here
+  if (!Array.isArray(items) || items.length === 0) return "";
+
+  // "Atta x 2 = Rs.80"
+  let bill = [];
+  bill = items.map(item => `${item.name} x ${item.qty} = Rs.${item.qty*item.price}`);
+  bill.join("\n");
 }
+
+formatBill(items)
