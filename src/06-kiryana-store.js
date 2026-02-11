@@ -63,19 +63,15 @@ export function getAffordableItems(items, maxPrice) {
   // Agar items array nahi hai ya maxPrice number nahi hai, return []
   if (!Array.isArray(items) || typeof maxPrice !== 'number') return [];
 
-  return items.filter(item => {
-    return item.price<=maxPrice &&
-    typeof item === "object" &&
-    item !== null &&
-    !Array.isArray(item);
-  });
+  return items.filter(item =>  item && typeof item === "object" && !Array.isArray(item) && item.price<=maxPrice )
+    
 }
 
 export function calculateTotal(items) {
   // Your code here
-  if (!Array.isArray(items) || items.length === 0) return "";
+  if (!Array.isArray(items) || items.length === 0) return 0;
   return items.reduce((total, item) => {
-    return item.price*item.qty;
+    return total + (item.price*item.qty);
   },0)
 }
 
@@ -85,10 +81,15 @@ export function sortByPrice(items, ascending) {
   // Agar items array nahi hai, return []
   if (!Array.isArray(items) || items.length === 0) return [];
 
+  const sorted = [...items];
+
   // [...items].sort() se NEW sorted array return karo (original mat badlo!)
   if (ascending){
-    return items.sort((a,b) => 
-      ((a.price - b.price) && typeof a === "object" && typeof b === "object")
+    return sorted.sort((a,b) => 
+      ((a.price - b.price))
+  )} else {
+    return sorted.sort((a,b) => 
+      ((b.price - a.price))
   )}
 
 }
@@ -97,10 +98,9 @@ export function formatBill(items) {
   // Your code here
   if (!Array.isArray(items) || items.length === 0) return "";
 
-  // "Atta x 2 = Rs.80"
-  let bill = [];
-  bill = items.map(item => `${item.name} x ${item.qty} = Rs.${item.qty*item.price}`);
-  bill.join("\n");
+  return items
+  .map(item => `${item.name} x ${item.qty} = Rs.${item.price * item.qty}`)
+  .join("\n");
+
 }
 
-formatBill(items)

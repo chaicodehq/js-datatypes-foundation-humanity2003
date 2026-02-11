@@ -89,7 +89,3 @@ export function mergeCarts(cart1, cart2) {
 
   return cart1.concat(cart2);
 }
-
-
-console.log(addUrgentItem(["tamatar"],123));
-console.log(addUrgentItem(['pyaaz', 'mirchi'],"dhaniya"));
